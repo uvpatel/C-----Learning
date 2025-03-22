@@ -3,7 +3,10 @@ int sum(int a,int b);
 
 
 int main(){
-    sum(5,6);
+    int a,b;
+    printf("Enter first number and Second number: ");
+    scanf("%d %d",&a,&b);
+    sum(a,b);
     return 0;
 }
 
