@@ -20,6 +20,8 @@ int main(){
 
     This sum function is taking two parameter a and b. and return value as int show it's written value is int.
 
+
+    in the function we pass variable which called as a argument like it is always in calling statement and which variable use in function it is known  as knnow as parameter
     
     */
     return 0;
