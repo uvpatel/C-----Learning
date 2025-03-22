@@ -30,7 +30,8 @@ int main(){
         Function Call
 
         int main(){
-             printHello();  <-- we can call function from main otherwise any other function.
+             printHello();  <-- we can call function from main otherwise any other function.but The defination is not allowed in main you can write declaration(prototype ) but not defination.
+             
         return 0;
         }
 
