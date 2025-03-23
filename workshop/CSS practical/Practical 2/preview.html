@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Urvil's Portfolio</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      :root {
+        --primary-color: crimson;
+        --dark-bg: #111;
+        --light-text: #fff;
+        --section-bg: #1a1a1a;
+      }
+
+      /* Theme variables for light mode */
+      [data-theme="light"] {
+        --dark-bg: #f5f5f5;
+        --light-text: #333;
+        --section-bg: #ffffff;
+      }
+
+      body {
+        background-color: var(--dark-bg);
+        color: var(--light-text);
+        transition: all 0.3s ease;
+      }
+
+      /* Hamburger Menu */
+      .hamburger {
+        display: none;
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        color: var(--light-text);
+      }
+
+      .nav-links {
+        display: flex;
+      }
+
+      /* Navigation */
+      nav {
+        padding: 1rem 5%;
+        background-color: rgba(26, 26, 26, 0.95);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+      }
+
+      nav ul {
+        list-style: none;
+        justify-content: flex-end;
+        gap: 2rem;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav a {
+        color: var(--light-text);
+        text-decoration: none;
+        transition: color 0.3s;
+        font-weight: 500;
+      }
+
+      nav a:hover {
+        color: var(--primary-color);
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 0 10%;
+        background: linear-gradient(45deg, #111, #1a1a1a);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, transparent, #111 70%);
+        z-index: 1;
+      }
+
+      .hero-content {
+        max-width: 600px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .profile-image {
+        width: 300px;
+        height: 300px;
+        border-radius: 20px;
+        object-fit: cover;
+        border: 3px solid var(--primary-color);
+        position: absolute;
+        right: 10%;
+        animation: floatImage 3s ease-in-out infinite;
+      }
+
+      @keyframes floatImage {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
+
+      .hello {
+        color: #888;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        opacity: 0;
+        animation: fadeInUp 0.5s ease forwards;
+      }
+
+      .name {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        opacity: 0;
+        animation: fadeInUp 0.5s ease forwards 0.2s;
+      }
+
+      .highlight {
+        color: var(--primary-color);
+      }
+
+      .title {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        color: #888;
+        opacity: 0;
+        animation: fadeInUp 0.5s ease forwards 0.4s;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Typewriter Effect */
+      .typewriter {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-right: 20px;
+        min-width: 12ch;
+        font-weight: bold;
+      }
+
+      /* Buttons */
+      .cta-button {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background-color: var(--primary-color);
+        color: var(--light-text);
+        text-decoration: none;
+        border-radius: 5px;
+        transition: all 0.3s;
+        opacity: 0;
+        animation: fadeInUp 0.5s ease forwards 0.6s;
+        border: none;
+        cursor: pointer;
+        margin-right: 1rem;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(220, 20, 60, 0.3);
+      }
+
+      /* Theme Toggle */
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: var(--primary-color);
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        transform: translateY(-2px);
+      }
+
+      /* Section Base Styles */
+      .about, .skills {
+        padding: 5rem 10%;
+      }
+
+      .about { background-color: var(--section-bg); }
+      .skills { background-color: var(--dark-bg); }
+
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: var(--primary-color);
+        position: relative;
+      }
+
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary-color);
+      }
+
+      /* About Section */
+      .about-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s;
+      }
+
+      .about-content.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1rem;
+        align-content: start;
+      }
+
+      .info-label {
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      /* Skills Section */
+      .skills { text-align: center; }
+
+      .logo-scroller {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .logo-track {
+        display: inline-flex;
+        animation: scroll 25s linear infinite;
+        white-space: nowrap;
+      }
+
+      .skill-logo {
+        height: 100px;
+        margin: 0 20px;
+        flex-shrink: 0;
+      }
+
+      @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+
+      .logo-track:hover {
+        animation-play-state: paused;
+      }
+
+      /* Contact Section */
+      .skills#contact .about-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      /* Projects Section */
+      .about#projects .about-content {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .about#projects .about-text {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 10px;
+        max-width: 300px;
+        text-align: left;
+        transition: all 0.3s ease;
+      }
+
+      .about#projects .about-text:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(220, 20, 60, 0.2);
+      }
+
+      .about#projects .project-link {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: transparent;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        border: 2px solid var(--primary-color);
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .about#projects .project-link:hover {
+        background: var(--primary-color);
+        color: var(--light-text);
+      }
+
+      /* Custom Cursor */
+      .custom-cursor {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s ease;
+      }
+
+      /* Scroll Animation */
+      .scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+
+      .scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Media Queries */
+      @media (max-width: 768px) {
+        .hamburger {
+            display: block;
+        }
+
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            padding: 1rem;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .profile-image {
+            position: relative;
+            right: auto;
+            margin: 2rem auto;
+            width: 200px;
+            height: 200px;
+        }
+
+        .hero {
+            flex-direction: column;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .about-content {
+            grid-template-columns: 1fr;
+        }
+
+        .name {
+            font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+    <!-- Navigation with Hamburger -->
+    <nav>
+      <div class="hamburger">☰</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero scroll">
+      <div class="hero-content">
+        <p class="hello">HELLO!</p>
+        <h1 class="name">I'm <span class="highlight">Urvil Patel</span></h1>
+        <p class="title"><span class="typewriter"></span></p>
+        <button class="cta-button" onclick="location.href='#contact'">Contact Me</button>
+        <button class="cta-button" onclick="alert('Resume download not implemented yet!')">Resume</button>
+      </div>
+      <img src="myimage.png" alt="Urvil's Profile" class="profile-image" />
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about scroll">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>
+            I'm a passionate developer with interests in AI, web development, and
+            cybersecurity. Currently exploring Python and front-end technologies to
+            build innovative solutions.
+          </p>
+        </div>
+        <div class="info-grid">
+          <span class="info-label">Name:</span>
+          <span>Urvil Patel</span>
+          <span class="info-label">Email:</span>
+          <span><a href="/cdn-cgi/l/email-protection#31444347585d715449505c415d541f525e5c"><span class="__cf_email__" data-cfemail="bacfc8ccd3d6fadfc2dbd7cad6df94d9d5d7">[email&#160;protected]</span></a></span>
+          <span class="info-label">Role:</span>
+          <span>AI Enthusiast & Web Developer</span>
+          <span class="info-label">Focus:</span>
+          <span>Python, Web Development, Cybersecurity</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+      <h2 class="section-title">My Skills</h2>
+      <div class="logo-scroller">
+        <div class="logo-track" id="logoTrack"></div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="about scroll">
+      <h2 class="section-title">Projects</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <h3 style="color: var(--primary-color); margin-bottom: 1rem">File Organizer</h3>
+          <p>A Python script that organizes files into categorized folders based on their extensions.</p>
+          <a href="https://github.com/uvpatel/file-organizer" target="_blank" class="project-link">View on GitHub</a>
+        </div>
+        <div class="about-text">
+          <h3 style="color: var(--primary-color); margin-bottom: 1rem">Python Games</h3>
+          <p>Developed small interactive games in Python using Pygame and Tkinter.</p>
+          <a href="https://github.com/uvpatel/python-games" target="_blank" class="project-link">View on GitHub</a>
+        </div>
+        <div class="about-text">
+          <h3 style="color: var(--primary-color); margin-bottom: 1rem">C Programming Projects</h3>
+          <p>Created simple C programs like a calculator and number guessing game.</p>
+          <a href="https://github.com/uvpatel/c-projects" target="_blank" class="project-link">View on GitHub</a>
+        </div>
+        <div class="about-text">
+          <h3 style="color: var(--primary-color); margin-bottom: 1rem">Web Development Projects</h3>
+          <p>Built static websites using HTML and CSS to improve front-end skills.</p>
+          <a href="https://github.com/uvpatel/web-projects" target="_blank" class="project-link">View on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="skills scroll">
+      <h2 class="section-title">Contact</h2>
+      <div class="about-content">
+        <a href="tel:+919016056853" target="_blank">
+          <img src="phone (2).gif" alt="Phone" width="40" height="40">
+        </a>
+        <a href="/cdn-cgi/l/email-protection#93e6e1e5faffd3f6ebf2fee3fff6bdf0fcfe" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" width="40" height="40">
+        </a>
+        <a href="https://github.com/uvpatel" target="_blank">
+          <img src="github.png" alt="GitHub" width="40" height="40">
+        </a>
+        <a href="https://linkedin.com/in/urvil-patel-6995a0320" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="40" height="40">
+        </a>
+      </div>
+    </section>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
+    <script>
+      // Theme toggle functionality
+      function toggleTheme() {
+        const body = document.body;
+        const currentTheme = body.getAttribute('data-theme');
+        if (currentTheme === 'light') {
+          body.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          body.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+        }
+      }
+
+      // Load saved theme
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        document.body.setAttribute('data-theme', 'light');
+      }
+
+      // Scroll and animation JavaScript
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: "0px 0px -50px 0px"
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            if (entry.target.classList.contains('skill-bars')) {
+              animateSkillBars();
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      // Observe elements
+      document.querySelectorAll('.about-content, .skill-bars').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Animate skill bars
+      function animateSkillBars() {
+        const skillBars = document.querySelectorAll('.skill-progress');
+        skillBars.forEach(bar => {
+          const progress = bar.getAttribute('data-progress');
+          bar.style.width = progress + '%';
+        });
+      }
+
+      // Smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+
+      const obser = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      });
+
+      document.querySelectorAll('.scroll').forEach(element => {
+        observer.observe(element);
+      });
+
+      // Logo scrolling
+      const logos = [
+        { src: "python.png", alt: "Python" },
+        { src: "c.jpg", alt: "C" },
+        { src: "css.png", alt: "CSS" },
+        { src: "html.png", alt: "HTML" },
+        { src: "tailwind.jpg", alt: "Tailwind CSS" },
+        { src: "github.png", alt: "Git hub" },
+        { src: "js.png", alt: "javascript" },
+      ];
+
+      const logoTrack = document.getElementById("logoTrack");
+
+      function populateLogos() {
+        const scrollerWidth = document.querySelector(".logo-scroller").offsetWidth;
+        const logoWidth = 140; // Approx width (100px height + 40px margin)
+        const logosPerSet = logos.length;
+        const setWidth = logosPerSet * logoWidth;
+        const minSets = Math.ceil((scrollerWidth * 2) / setWidth); // At least 2x screen width
+
+        for (let i = 0; i < minSets; i++) {
+          logos.forEach(logo => {
+            const img = document.createElement("img");
+            img.src = logo.src;
+            img.alt = logo.alt;
+            img.classList.add("skill-logo");
+            logoTrack.appendChild(img);
+          });
+        }
+      }
+
+      // Run on page load
+      populateLogos();
+
+      // Adjust on resize
+      window.addEventListener("resize", () => {
+        logoTrack.innerHTML = "";
+        populateLogos();
+      });
+
+      // Typewriter effect
+      document.addEventListener("DOMContentLoaded", () => {
+        const titles = [
+          "AI Enthusiast",
+          "Web Developer",
+          "Python Programmer",
+          "Bug Bounty Hunter",
+          "Future Data Scientist",
+          "Tech Explorer",
+          "Ethical Hacking Learner",
+          "DSA Aspirant"
+        ];
+        
+        const typewriter = document.querySelector(".typewriter");
+        let currentIndex = 0;
+        let charIndex = 0;
+        let isErasing = false;
+        let animationFrameId = null;
+
+        // Animation timing constants (in milliseconds)
+        const typeSpeed = 150; // Typing speed (150ms per character)
+        const eraseSpeed = 100; // Erasing speed (100ms per character)
+        const pauseAfterType = 2000; // 2s pause after typing
+        const pauseAfterErase = 1000; // 1s pause after erasing
+
+        function typeEffect() {
+          const text = titles[currentIndex];
+
+          if (!isErasing) {
+            // Typing effect
+            typewriter.textContent = text.substring(0, charIndex++);
+            if (charIndex <= text.length) {
+              animationFrameId = setTimeout(typeEffect, typeSpeed);
+            } else {
+              isErasing = true;
+              animationFrameId = setTimeout(typeEffect, pauseAfterType);
+            }
+          } else {
+            // Erasing effect
+            typewriter.textContent = text.substring(0, charIndex--);
+            if (charIndex >= 0) {
+              animationFrameId = setTimeout(typeEffect, eraseSpeed);
+            } else {
+              isErasing = false;
+              currentIndex = (currentIndex + 1) % titles.length; // Cycle to next title
+              animationFrameId = setTimeout(typeEffect, pauseAfterErase);
+            }
+          }
+        }
+
+        // Start animation
+        typeEffect();
+
+        // Cleanup function to clear timeout if needed
+        window.addEventListener("unload", () => {
+          clearTimeout(animationFrameId);
+        });
+      });
+    </script>
+  </body>
+</html>
